@@ -1,4 +1,7 @@
-import enums::state;
+// The only reason why this enum is packaged in another file is so it can
+// also be read from testbench.sv.  In most cases, you can just declare
+// your state enum in the same file as your state machine without a package.
+import enums::state_t;
 
 module control_unit
 (
@@ -9,7 +12,7 @@ module control_unit
 );
     
     // Declare a register which holds the current state.
-    enums::state cur_state;
+    enums::state_t cur_state;
     
     // Transition function for the state machine
     // Based on the current state, reset, and execute
@@ -59,7 +62,7 @@ module control_unit
     end
     
     // Output function of the state machine.  Since this is a Mealy machine,
-    // the output will depend on both the current state and the current inputs.
+    // the output will depend on both the current state and the execute input.
     // Note that an 'assign' statement is basically a 1-line always_comb block.
     assign shift_enable
       = (cur_state == enums::IDLE & execute)

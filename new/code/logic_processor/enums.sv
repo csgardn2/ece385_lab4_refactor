@@ -7,6 +7,7 @@ package enums;
        SHIFT_2,
        SHIFT_3,
        HOLDING
-   } state;
+   } state_t;
 
 endpackage
+

@@ -30,30 +30,30 @@ module register_unit
     output logic[3:0] b_parallel_out
 );
     
-    // Declare internal storage for this module.  2 4-bit registers.
+    // Declare internal storage for this module
     logic[3:0] a_storage;
     logic[3:0] b_storage;
     
-    // Compute the next-state of registers a_storage and b_storage at each rising clcok edge 
+    // Compute the next-state of registers a_storage and b_storage at each rising clock edge 
     always_ff @(posedge clk)
     begin
         
-        // Prioritized behavior of A register
         if (reset)
+            // Synchronous reset
             a_storage <= 4'h0;
-        else if (a_load_enable)
-            a_storage <= a_parallel_in;
         else if (shift_enable)
             a_storage <= {a_serial_in, a_storage[3:1]};
+        else if (a_load_enable)
+            a_storage <= a_parallel_in;
         
-        // Prioritized behavior of B register.  This if-else chain is independent of that of
+        // Prioritized behavior of B register.  This if-else chain is independent of the one for
         // A above and operates in parallel with it (both registers update in the same clock cycle)
         if (reset)
             b_storage <= 4'h0;
-        else if (b_load_enable)
-            b_storage <= b_parallel_in;
         else if (shift_enable)
             b_storage <= {b_serial_in, b_storage[3:1]};
+        else if (b_load_enable)
+            b_storage <= b_parallel_in;
         
     end
     

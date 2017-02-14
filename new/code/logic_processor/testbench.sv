@@ -3,7 +3,8 @@
 // It is used to stimulate the input signals of a module 
 // with a specific test pattern.
 
-import enums::state;
+// Import the "state_t" enumeration from the "enums" package
+import enums::state_t;
 
 // The testbench does not have input nor output pins,
 // since it will not become real hardware and has
@@ -32,7 +33,7 @@ module testbench();
     
     // You can view the internal signals of modules from a testbench.
     // Use the period . to traverse the module heiarchy
-    state cur_state;
+    state_t cur_state;
     assign cur_state = logic_processor_inst.control_unit_inst.cur_state;
     
     logic_processor logic_processor_inst
